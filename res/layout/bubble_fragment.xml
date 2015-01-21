@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/home_fragment"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:layout_marginTop="30dp"
+	android:layout_marginBottom="30dp"
+	android:gravity="center" >
+    	    
+    <ImageView android:id="@+id/bubble_home"
+		android:contentDescription="@drawable/bubble_home"
+		android:background="@drawable/bubble_home"
+		android:layout_width="360dp"
+		android:layout_height="192dp"
+		/>
+    
+    <ImageView android:id="@+id/bubble_question_male"
+		android:contentDescription="@drawable/bubble_question_male"
+		android:background="@drawable/bubble_question_male"
+		android:layout_width="360dp"
+		android:layout_height="192dp"
+		/>
+    
+    <ImageView android:id="@+id/bubble_question_female"
+		android:contentDescription="@drawable/bubble_question_female"
+		android:background="@drawable/bubble_question_female"
+		android:layout_width="360dp"
+		android:layout_height="192dp"
+		/>
+
+</RelativeLayout>

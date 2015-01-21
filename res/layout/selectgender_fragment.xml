@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/selectgender_fragment"
+    	android:baselineAligned="false"
+    	android:orientation="vertical"
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:gravity="center" >
+    	
+    
+    <Button android:id="@+id/male_button"
+        	android:layout_width="100dp"
+        	android:layout_height="100dp"
+        	android:layout_marginBottom="24dp"
+        	android:background="@drawable/male_button"
+        	android:textSize="20sp" />
+    
+    <Button android:id="@+id/female_button"
+        	android:layout_width="100dp"
+        	android:layout_height="100dp"
+        	android:layout_marginBottom="72dp"
+        	android:background="@drawable/female_button"
+        	android:textSize="20sp" />
+    
+    
+    
+</LinearLayout>
+ 
