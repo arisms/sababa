@@ -1,4 +1,29 @@
-
+ public void recordFeedback(String feedback) {
+    	Log.d(TAG, "recordFeedback() - " + feedback);
+    	
+    	File file = new File(mActivity.getExternalFilesDir(null), "feedback.txt");
+    	if (!file.exists()) {
+    		try {
+    			file.createNewFile();
+    		} catch (IOException e) {
+        		Log.e(TAG, "" + e);
+            }
+    	}
+    	BufferedWriter writer = null;
+    	try {
+    		writer = new BufferedWriter(new FileWriter(file, true /*append*/));
+    		}  catch (IOException e) { Log.e(TAG, "" + e); }
+    	try {
+    		writer.write("This is a test trace file."); 
+    		}  catch (IOException e) { Log.e(TAG, "" + e); }
+    	try {
+    		writer.close();
+    		} catch (IOException e) { Log.e(TAG, "" + e); }
+    }
+    
+    
+    
+    
     protected void onDestroy() {
     	Log.d(TAG, "onDestroy");
 	    super.onDestroy();
@@ -20,3 +45,43 @@
     }
     }
   
+  
+  
+  String path = mActivity.getFilesDir().getAbsolutePath();
+    	String data = "";
+    	File file = new File(path + "/feedback.txt");
+    	
+    	Log.d(TAG, "path: " + path);
+    	
+    	try {
+    		stream = new FileOutputStream(file);
+    	} catch (FileNotFoundException e) {
+       	 Log.e("DatabaseHelper", "file not found " + e);
+        }
+
+    	int time = (int) (System.currentTimeMillis());
+    	Timestamp tsTemp = new Timestamp(time);
+    	String ts =  tsTemp.toString();
+    	
+    	if(feedback.equals("Positive")) {
+    		data = ts + ": " + "Positive";
+    	}
+    	else if(feedback.equals("Neutral")) {
+    		data = ts + ": " + "Neutral";
+    	}
+    	else if(feedback.equals("Negative")) {
+    		data = ts + ": " + "Negative";
+    	}
+    	
+    	try {
+    	    stream.write((data).getBytes());
+    	} catch (IOException e) {
+    		Log.e("DatabaseHelper", "write to file error " + e);
+        }
+    	finally {
+    		try {
+    			stream.close();
+    		} catch (IOException e) {
+	        	 Log.e("DatabaseHelper", "stream close error " + e);
+	         }
+    	}

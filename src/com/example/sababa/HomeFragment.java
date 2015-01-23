@@ -57,7 +57,7 @@ public class HomeFragment extends Fragment {
     public void onResume() {
     	super.onResume();
     	Log.d(TAG, "onResume()");
-    	mActivity.mBubbleFragment.setBubble("Home");
+    	mActivity.mHeaderFragment.setBubble("Home");
     }
     
     @Override

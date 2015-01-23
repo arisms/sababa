@@ -17,7 +17,6 @@
     <Button android:id="@+id/female_button"
         	android:layout_width="100dp"
         	android:layout_height="100dp"
-        	android:layout_marginBottom="72dp"
         	android:background="@drawable/female_button"
         	android:textSize="20sp" />
     

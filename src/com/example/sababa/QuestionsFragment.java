@@ -5,10 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -24,17 +22,18 @@ private static final String TAG = "QuestionsFragment";
 	// Member Data
 	Button yesButton;
 	Button noButton;
-	QuestionMaleFragmentListener mListener;
+	QuestionsFragmentListener mListener;
 	MainActivity mActivity;
 	TextView question;
-	List<String> mQuestionsList;
-	public int currentQuestionIndex;
+	public boolean showFeedback = true;
+	public boolean startGame = true;
+	View view;
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	Log.d(TAG, "onCreateView()");
         // Inflate the layout for this fragment
-    	View view =  inflater.inflate(R.layout.questions_fragment, container, false);
+    	view =  inflater.inflate(R.layout.questions_fragment, container, false);
         mActivity = (MainActivity) getActivity();
     	
         // Buttons
@@ -53,9 +52,24 @@ private static final String TAG = "QuestionsFragment";
     		}
     	});
         
-        // Read the questions from the txt file and store them in a list
+        question = (TextView) view.findViewById(R.id.question_text);
+        question.setTypeface(mActivity.nanumBrushScript);
+        
+        if(startGame) {
+        	startGame();
+        
+        	// Show the first question
+        }
+        setNextQuestion();
+        
+        return view;
+    }
+    
+    public void startGame() {
+    	Log.d(TAG, "startGame()");
+    	// Read the questions from the txt file and store them in a list
         BufferedReader reader = null;
-        mQuestionsList = new ArrayList<String>();
+        mActivity.mQuestionsList = new ArrayList<String>();
         try {
         		if(mActivity.playerGender.equals("Male")) {
         			reader = new BufferedReader(new InputStreamReader(getActivity().getAssets().
@@ -67,8 +81,7 @@ private static final String TAG = "QuestionsFragment";
         		}
         		String mLine = reader.readLine();
         		while (mLine != null) {
-        			Log.d(TAG, mLine);
-        			mQuestionsList.add(mLine);
+        			mActivity.mQuestionsList.add(mLine);
         			
         			mLine = reader.readLine();
         		}
@@ -87,23 +100,20 @@ private static final String TAG = "QuestionsFragment";
     	    }
     	}
         // Randomize order of questions
-        Collections.shuffle(mQuestionsList);
+        Collections.shuffle(mActivity.mQuestionsList);
         
-        question = (TextView) view.findViewById(R.id.question_text);
+        mActivity.currentQuestionIndex = 0;
         
-        currentQuestionIndex = 0;
-        question.setTypeface(mActivity.nanumBrushScript);
-        
-        // Show the first question
-        setNextQuestion();
-        
-        return view;
+        startGame = false;
     }
     
     public boolean setNextQuestion() {
-    	if(currentQuestionIndex < mQuestionsList.size()) {
-    		question.setText(mQuestionsList.get(currentQuestionIndex));
-    		currentQuestionIndex++;
+    	Log.d(TAG, "setNextQuestion(), size - index:" + mActivity.mQuestionsList.size() + " - " + mActivity.currentQuestionIndex);
+    	
+    	if(mActivity.currentQuestionIndex < mActivity.mQuestionsList.size()) {
+    		question.setText(mActivity.mQuestionsList.get(mActivity.currentQuestionIndex));
+    		mActivity.currentQuestionIndex++;
+    		showFeedback = true;
     		return true;
     	}
     	return false;
@@ -113,8 +123,8 @@ private static final String TAG = "QuestionsFragment";
 	public void onAttach(Activity activity) {
 		Log.d(TAG, "onAttach()");
 	    super.onAttach(activity);
-	    if (activity instanceof QuestionMaleFragmentListener) {
-	    	mListener = (QuestionMaleFragmentListener) activity;
+	    if (activity instanceof QuestionsFragmentListener) {
+	    	mListener = (QuestionsFragmentListener) activity;
 	    } else {
 	      throw new ClassCastException(activity.toString()
 	          + " must implemenet HomeFragment.OnButtonSelectedListener");
@@ -125,10 +135,9 @@ private static final String TAG = "QuestionsFragment";
     public void onResume() {
     	super.onResume();
     	Log.d(TAG, "onResume()");
-    	//activity.mBubbleFragment.setBubble("Home");
     }
 
-    public interface QuestionMaleFragmentListener {
+    public interface QuestionsFragmentListener {
 		
 		public void onYesButton();
 		
