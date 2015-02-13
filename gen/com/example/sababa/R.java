@@ -65,8 +65,8 @@ public final class R {
         public static final int settings=0x7f09000e;
         public static final int singleplayer=0x7f09000c;
         public static final int smiley1_button=0x7f090006;
-        public static final int smiley2_button=0x7f090005;
-        public static final int smiley3_button=0x7f090007;
+        public static final int smiley2_button=0x7f090007;
+        public static final int smiley3_button=0x7f090005;
         public static final int yes_button=0x7f090011;
     }
     public static final class layout {
